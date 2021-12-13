@@ -20,6 +20,11 @@ public class MEE{
     */
     public MEE (int[] tab){
         this.tabFreq=tab;
+        for(int i=0;i<tab.length;i++){
+          if(tab[i]!=0){
+            this.nbTotEx+=tab[i];
+          }
+        }
     }
 
     /*Constructeur par copie*/
@@ -42,6 +47,7 @@ public class MEE{
     */
     public void ajoute(int i){
         this.tabFreq[i]=this.tabFreq[i]+1;
+        this.nbTotEx+=1;
     }
 
     /*
@@ -50,11 +56,91 @@ public class MEE{
     * et retourne vrai ssi cette action a pu être effectuée
     */
     public boolean retire(int i){
-        estPossibleRetire=true;
+        boolean estPossibleRetire;
         this.tabFreq[i]=this.tabFreq[i]-1;
-        if(this.tabFreq<0){
-            this.tabFreq=0;
+        if(this.tabFreq[i]<0){
+            this.tabFreq[i]=0;
             estPossibleRetire=false;
         }
+        else{
+          estPossibleRetire=true;
+          this.nbTotEx-=1;
+        }
+      return estPossibleRetire;
     }
+
+    /**
+    * pré-requis : this est non vide
+    * action/résultat : retire de this un exemplaire choisi aléatoirement
+    * et le retourne
+    */
+  public int retireAleat () {
+    int n=Ut.randomMinMax(0,25);
+    if(this.tabFreq[n]==0){
+      return 0;
+    }
+    else{
+      this.tabFreq[n]-=1;
+      this.nbTotEx-=1;
+      return n;
+    }
+  }
+
+  /**
+  * pré-requis : 0 <= i < tabFreq.length
+  * action/résultat : transfère un exemplaire de i de this vers e s’il
+  * en existe, et retourne vrai ssi cette action a pu être effectuée
+  */
+  public boolean transfere (MEE e, int i) {
+    boolean estPossibletransfere;
+    if(this.tabFreq[i]==0){
+      estPossibletransfere=false;
+    }
+    else{
+      estPossibletransfere=true;
+      e.tabFreq[i]+=1;
+      e.nbTotEx+=1;
+      this.tabFreq[i]-=1;
+      this.nbTotEx-=1;
+    }
+    return estPossibletransfere;
+  }
+
+  /** pré-requis : k >= 0
+  * action : tranfère k exemplaires choisis aléatoirement de this vers e
+  * dans la limite du contenu de this
+  * résultat : le nombre d’exemplaires effectivement transférés
+  */
+  public int transfereAleat (MEE e, int k) {
+    int n = Ut.randomMinMax(0,25);
+    if(this.tabFreq[n]-k<0){
+      int provisoire=this.tabFreq[n];
+      this.nbTotEx-=this.tabFreq[n];
+      e.tabFreq[n]=this.tabFreq[n];
+      this.tabFreq[n]=0;
+      return provisoire;
+    }
+    else{
+      this.nbTotEx-=k;
+      this.tabFreq[n]-=k;
+      e.nbTotEx+=k;
+      e.tabFreq[n]+=k;
+      return k;
+    }
+  }
+
+  /**
+  * pré-requis : tabFreq.length <= v.length
+  * résultat : retourne la somme des valeurs des exemplaires des
+  * éléments de this, la valeur d’un exemplaire d’un élément i
+  * de this étant égale à v[i]
+  */
+  public int sommeValeurs (int[] v){
+    int sommevaleurs=0;
+    for (int i =0; i < this.tabFreq;i++){
+      sommevaleurs+=this.tabFreq[i]*v[i];
+    }
+    return sommevaleurs;
+  }
+
 }
