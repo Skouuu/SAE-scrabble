@@ -227,6 +227,7 @@ public class Ut {
 	// Resultat : vrai ssi an est bissextile
 	return an % 400 == 0 || an % 4 == 0 && an % 100 != 0;
     }
+
     
 } // end class
 

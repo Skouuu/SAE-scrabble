@@ -1,4 +1,5 @@
 public class MEE{
+  /*fini*/
     //Attribut
     private int [] tabFreq;
     private int nbTotEx;
@@ -36,6 +37,10 @@ public class MEE{
         }
     }
 
+
+  public int getNbTotEx(){
+    return this.nbTotEx;
+  }
     //Méthodes
     /*résultat : vrai ssi cet ensemble est vide*/
     public boolean estVide (){
@@ -110,24 +115,20 @@ public class MEE{
   * action : tranfère k exemplaires choisis aléatoirement de this vers e
   * dans la limite du contenu de this
   * résultat : le nombre d’exemplaires effectivement transférés
+    transfère des éléments k qui sont choisis aléatoirement à chaque fois
   */
   public int transfereAleat (MEE e, int k) {
-    int n = Ut.randomMinMax(0,25);
-    if(this.tabFreq[n]-k<0){
-      int provisoire=this.tabFreq[n];
-      this.nbTotEx-=this.tabFreq[n];
-      e.tabFreq[n]=this.tabFreq[n];
-      this.tabFreq[n]=0;
-      return provisoire;
+    int nbtransfere=0;
+    for(int i=0;i<k;i++){
+      int n = Ut.randomMinMax(0,25);
+      if(this.transfere(e,n)){
+      nbtransfere++;
+      }
     }
-    else{
-      this.nbTotEx-=k;
-      this.tabFreq[n]-=k;
-      e.nbTotEx+=k;
-      e.tabFreq[n]+=k;
-      return k;
-    }
+    return nbtransfere;
   }
+
+    
 
   /**
   * pré-requis : tabFreq.length <= v.length
@@ -135,12 +136,14 @@ public class MEE{
   * éléments de this, la valeur d’un exemplaire d’un élément i
   * de this étant égale à v[i]
   */
+  
   public int sommeValeurs (int[] v){
     int sommevaleurs=0;
-    for (int i =0; i < this.tabFreq;i++){
+    for (int i =0; i < this.tabFreq.length;i++){
       sommevaleurs+=this.tabFreq[i]*v[i];
     }
     return sommevaleurs;
   }
+  
 
 }

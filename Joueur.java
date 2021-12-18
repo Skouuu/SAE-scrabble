@@ -7,6 +7,7 @@ public class Joueur{
   public Joueur(String unNom){
     this.nom=unNom;
     this.score=0;
+    this.chevalet=new MEE(26);
   }
 
   public String toString(){
@@ -14,6 +15,8 @@ public class Joueur{
     a += this.nom;
     a += " a un score de ";
     a += this.score;
+    a+= "son chevalet est "
+    a+=this.chevalet;
     return a;
   }
 
@@ -32,7 +35,7 @@ public class Joueur{
       * résultat : le nombre de points total sur le chevalet de ce joueur
       * suggestion : bien relire la classe MEE !
       */
-    return this.chevalet.sommeValeur(nbPointsJet);
+    return this.chevalet.sommeValeurs(nbPointsJet);
   }
 
   public void prendJetons (MEE s, int nbJetons) {
@@ -41,7 +44,7 @@ public class Joueur{
       * action : simule la prise de nbJetons jetons par this dans le sac s,
       * dans la limite de son contenu.
       */
-      boolean prendre=s.transfere(this,nbJetons);
+    int prendre=s.transfereAleat(this.chevalet, nbJetons);
   }
 
   public int joue(Plateau p, MEE s, int[] nbPointsJet) {
@@ -53,6 +56,30 @@ public class Joueur{
       * résultat : -1 si this a passé son tour, 1 si son chevalet est vide,
       * et 0 sinon
       */
+      int choix;
+      Ut.afficherSL("Que voulez-vous faire ?");
+      Ut.afficherSL("1 : Proposer un mot");
+      Ut.afficherSL("2 : Echanger des jetons");
+      Ut.afficherSL("3 : Passer votre tour");
+      int n=Ut.saisirEntier();
+      if(n<1 | n>3){
+        Ut.afficherSL("Que voulez-vous faire ?");
+        Ut.afficherSL("1 : Proposer un mot");
+        Ut.afficherSL("2 : Echanger des jetons");
+        Ut.afficherSL("3 : Passer votre tour");
+        int n=Ut.saisirEntier();
+      }
+      if(n==1){
+        
+      }
+    else if (n==2){
+      
+    }
+    else {
+      choix=-1;
+    }
+      return 1;
+      
 
   }
 
@@ -64,6 +91,7 @@ public class Joueur{
       * (accepté par CapeloDico et satisfaisant les
       * règles détaillées plus haut)
       */
+      return true;
   }
 
   public void echangeJetons(MEE sac) {
@@ -73,5 +101,4 @@ public class Joueur{
       */
   }
 }
-
 
